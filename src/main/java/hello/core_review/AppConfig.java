@@ -1,6 +1,8 @@
 package hello.core_review;
 
+import hello.core_review.discount.DiscountPolicy;
 import hello.core_review.discount.FixDiscountPolicy;
+import hello.core_review.discount.RateDiscountPolicy;
 import hello.core_review.member.MemberService;
 import hello.core_review.member.MemberServiceImpl;
 import hello.core_review.member.MemoryMemberRepository;
@@ -15,11 +17,19 @@ public class AppConfig {
      *
      * @return
      */
-    public MemberService memberService(){
-        return new MemberServiceImpl(new MemoryMemberRepository());
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    private MemoryMemberRepository memberRepository() {
+        return new MemoryMemberRepository();
     }
 
     public OrderService orderService(){
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    public DiscountPolicy discountPolicy(){
+        return new RateDiscountPolicy();
     }
 }
