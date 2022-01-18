@@ -24,6 +24,9 @@ public class AppConfig {
      * @Bean 을 하게 되면 method들이 스프링 컨테이너에 자동으로 등록된다
      */
 
+    // @Bean memberService -> new MemoryMemberRepository()
+    // @Bean orderService -> new OrderServiceImpl -> new MemoryMemberRepository
+    // 결과적으로 MemoryMemberRepository가 2번 호출된다
 
     @Bean
     public MemberService memberService() {
