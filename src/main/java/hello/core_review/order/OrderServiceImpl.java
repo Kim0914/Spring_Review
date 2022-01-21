@@ -1,15 +1,19 @@
 package hello.core_review.order;
 
+import hello.core_review.annotation.MainDiscountPolicy;
 import hello.core_review.discount.DiscountPolicy;
 
 import hello.core_review.member.Member;
 import hello.core_review.member.MemberRepository;
 import hello.core_review.member.MemberServiceImpl;
 import hello.core_review.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+// @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
     //private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -30,8 +34,10 @@ public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    // 생성자가 1개만 있는 경우 Autowired 없어도 자동으로 Autowired 효과
+    // 롬복 라이브러리가 제공하는 @RequiredArgConstructor 때문에 생성자 코드 생략이 가능하다
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
